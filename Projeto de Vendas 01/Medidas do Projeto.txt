@@ -1,0 +1,17 @@
+Vendas Valid = CALCULATE([Vendas Geral];Fato_vendas[Situacao]="N")
+
+Val Meta = CALCULATE(SUM(Fato_meta[Valor_meta]))
+
+Vendas com Vendedor = CALCULATE([Vendas valid];Fato_vendas[Cod_vend]<>BLANK())
+
+Val Max = [Vendas com Vendedor]*1,2
+
+% Meta = DIVIDE([Vendas com Vendedor];[Val Meta];0)
+
+KPI = IF([% Meta]<1;"🔴";"🟢")
+
+Vendas Geral = CALCULATE(SUMX(Fato_vendas;Fato_vendas[Qtde]*Fato_vendas[Pr_Unit]))
+
+Custo Vendas = CALCULATE(SUMX(Fato_vendas;Fato_vendas[Qtde]*Fato_vendas[Pr_custo]);Fato_vendas[Situacao]="N")
+
+% Lucro = DIVIDE([Vendas Valid];[Custo Vendas])-1
